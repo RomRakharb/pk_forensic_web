@@ -8,6 +8,8 @@ pkgs.mkShell {
     clippy
 
     bacon
+
+    tailwindcss
   ];
 
   shellHook = ''

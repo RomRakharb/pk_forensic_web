@@ -1,15 +1,93 @@
-use axum::{routing::get, Router};
-use maud::{html, Markup};
+use axum::{response::Html, routing::get, Router};
+use maud::{html, Markup, PreEscaped, Render, DOCTYPE};
+use tokio::fs;
+use tower_http::services::ServeDir;
 
-async fn hello_world() -> Markup {
-    html! {
-        h1 { "Hello World" }
+#[allow(dead_code)]
+struct Css(&'static str);
+
+impl Render for Css {
+    fn render(&self) -> Markup {
+        html! {
+            link rel="stylesheet" type="text/css" href=(self.0);
+        }
     }
+}
+
+fn header() -> Markup {
+    html! {
+        div ."bg-white-600 text-black p-5" {
+            div ."max-w-7xl mx-auto flex justify-between items-center"{
+                img src = "./static/logo.png" href = "/";
+                nav {
+                    ul ."flex space-x-6"{
+                        a href="#" ."hover:text-gray-300" {"หน้าแรก"}
+                        a href="#" ."hover:text-gray-300" {"เกี่ยวกับเรา"}
+                        a href="#" ."hover:text-gray-300" {"ติดต่อ"}
+                    }
+                }
+            }
+        }
+    }
+}
+
+fn nav_bar() -> Markup {
+    html! {
+        div ."" {
+            div ."" {
+                nav {
+                    ul {
+                        a href="#" {}
+                        a href="#" {}
+                        a href="#" {}
+                        a href="#" {}
+                        a href="#" {}
+                    }
+                }
+            }
+        }
+    }
+}
+
+fn carousel() -> Markup {
+    html! {}
+}
+
+fn home() -> Markup {
+    html! {
+        (DOCTYPE)
+        html {
+            head {
+                meta charset = "utf-8";
+                title { "พิสูจน์หลักฐานจังหวัดภูเก็ต" }
+                script src = "https://cdn.tailwindcss.com";
+                (PreEscaped("<script>https://cdn.tailwindcss.com</script>"))
+                script src = "https://unpkg.com/htmx.org@2.0.3";
+                (PreEscaped("<script>https://unpkg.com/htmx.org@2.0.3</script>"))
+            }
+            body {
+                (header())
+                (nav_bar())
+                (carousel())
+            }
+        }
+    }
+}
+
+async fn html_template() -> Html<String> {
+    let html = home();
+
+    let html_str = html.clone().into_string();
+    fs::write("./static/index.html", &html_str).await.unwrap();
+
+    Html(html_str)
 }
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().route("/", get(hello_world));
+    let app = Router::new()
+        .route("/", get(html_template))
+        .nest_service("/static", ServeDir::new("static"));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
