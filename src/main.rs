@@ -3,6 +3,8 @@ use maud::{html, Markup, PreEscaped, Render, DOCTYPE};
 use tokio::fs;
 use tower_http::services::ServeDir;
 
+use pk_forensic_web::components::{carousel, header, nav_bar};
+
 #[allow(dead_code)]
 struct Css(&'static str);
 
@@ -12,45 +14,6 @@ impl Render for Css {
             link rel="stylesheet" type="text/css" href=(self.0);
         }
     }
-}
-
-fn header() -> Markup {
-    html! {
-        div ."bg-white-600 text-black p-5" {
-            div ."max-w-7xl mx-auto flex justify-between items-center"{
-                img src = "./static/logo.png" href = "/";
-                nav {
-                    ul ."flex space-x-6"{
-                        a href="#" ."hover:text-gray-300" {"หน้าแรก"}
-                        a href="#" ."hover:text-gray-300" {"เกี่ยวกับเรา"}
-                        a href="#" ."hover:text-gray-300" {"ติดต่อ"}
-                    }
-                }
-            }
-        }
-    }
-}
-
-fn nav_bar() -> Markup {
-    html! {
-        div ."" {
-            div ."" {
-                nav {
-                    ul {
-                        a href="#" {}
-                        a href="#" {}
-                        a href="#" {}
-                        a href="#" {}
-                        a href="#" {}
-                    }
-                }
-            }
-        }
-    }
-}
-
-fn carousel() -> Markup {
-    html! {}
 }
 
 fn home() -> Markup {
