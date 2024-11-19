@@ -3,7 +3,7 @@ use maud::{html, Markup, PreEscaped, Render, DOCTYPE};
 use tokio::fs;
 use tower_http::services::ServeDir;
 
-use pk_forensic_web::components::{carousel, header, nav_bar};
+use pk_forensic_web::components::{carousel, footer, header};
 
 #[allow(dead_code)]
 struct Css(&'static str);
@@ -28,10 +28,24 @@ fn home() -> Markup {
                 script src = "https://unpkg.com/htmx.org@2.0.3";
                 (PreEscaped("<script>https://unpkg.com/htmx.org@2.0.3</script>"))
             }
-            body {
+            body ."min-h-screen flex flex-col" {
                 (header())
-                (nav_bar())
-                (carousel())
+                div ."flex-grow p-8" {
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                    (carousel())
+                }
+                (footer())
             }
         }
     }
