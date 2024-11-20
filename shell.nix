@@ -9,11 +9,11 @@ pkgs.mkShell {
 
     bacon
 
-    loco-cli
     tailwindcss
   ];
 
   shellHook = ''
+    alias loco="/home/rom/.cargo/bin/loco"
     clear
     echo " -------------------------------------------"
     echo " | Welcome to Rust Development Environment |"

@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 use loco_rs::{
-    app::{AppContext, Hooks},
+    app::{AppContext, Hooks, Initializer},
     bgworker::Queue,
     boot::{create_app, BootResult, StartMode},
     controller::AppRoutes,
@@ -10,8 +10,6 @@ use loco_rs::{
 };
 
 use crate::controllers;
-#[allow(unused_imports)]
-use crate::tasks;
 
 pub struct App;
 #[async_trait]
@@ -34,17 +32,16 @@ impl Hooks for App {
         create_app::<Self>(mode, environment).await
     }
 
-    fn routes(_ctx: &AppContext) -> AppRoutes {
-        AppRoutes::empty() // controller routes below
-            .add_route(controllers::home::routes())
+    async fn initializers(_ctx: &AppContext) -> Result<Vec<Box<dyn Initializer>>> {
+        Ok(vec![])
     }
 
+    fn routes(_ctx: &AppContext) -> AppRoutes {
+        AppRoutes::with_default_routes() // controller routes below
+            .add_route(controllers::home::routes())
+    }
     async fn connect_workers(_ctx: &AppContext, _queue: &Queue) -> Result<()> {
         Ok(())
     }
-
-    #[allow(unused_variables)]
-    fn register_tasks(tasks: &mut Tasks) {
-        // tasks.register(TASK);
-    }
+    fn register_tasks(_tasks: &mut Tasks) {}
 }
