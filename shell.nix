@@ -9,6 +9,7 @@ pkgs.mkShell {
 
     bacon
 
+    loco-cli
     tailwindcss
   ];
 
