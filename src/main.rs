@@ -4,7 +4,7 @@ use maud::{html, Markup, DOCTYPE};
 async fn home() -> Markup {
     html! {
         (header("พิสูจน์หลักฐานจังหวัดภูเก็ต"))
-        h1 { "Hello, World!" }
+        h1 ."text-red-300" { "Hello, World!" }
         (footer())
     }
 }
@@ -14,6 +14,7 @@ fn header(title: &str) -> Markup {
         (DOCTYPE)
         meta charset="utf-8";
         title { (title) }
+        script src="https://cdn.tailwindcss.com" {}
     }
 }
 
