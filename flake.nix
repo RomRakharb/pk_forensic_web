@@ -17,10 +17,13 @@
         clippy
         rustfmt
         rust-analyzer
+
+        bacon
       ];
 
 
       shellHook = ''
+        echo -e '[language-server.rust-analyzer.config]\ncheck.command = "clippy"' > ~/.config/helix/languages.toml
         clear
         echo "Rust Development Environment"
         rustc --version
