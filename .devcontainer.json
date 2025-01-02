@@ -1,7 +1,15 @@
 {
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers/features/rust:1": {}
+    "ghcr.io/devcontainers/features/rust:1https://github.com/RomRakharb/pk_forensic_web/wiki": {}
   },
-  "postCreateCommand": "apt-get install software-properties-common && add-apt-repository ppa:maveonair/helix-editor && apt update && apt install helix"
+  "postCreateCommand": [
+    "apt-get install software-properties-common",
+    "add-apt-repository ppa:maveonair/helix-editor",
+    "apt update",
+    "apt install helix",
+    "cargo install cargo-binstall",
+    "cargo binstall dioxus-cli",
+    "apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev"
+  ]
 }
