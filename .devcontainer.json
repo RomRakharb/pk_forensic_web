@@ -3,6 +3,10 @@
   "features": {
     "ghcr.io/devcontainers/features/rust:1": {}
   },
+  "updateContentCommand": [
+    "apt update",
+    "apt upgrade"
+  ],
   "postCreateCommand": [
     "apt update",
     "apt upgrade",
