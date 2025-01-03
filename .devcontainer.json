@@ -1,7 +1,7 @@
 {
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers/features/rust:1https://github.com/RomRakharb/pk_forensic_web/wiki": {}
+    "ghcr.io/devcontainers/features/rust:1": {}
   },
   "postCreateCommand": [
     "apt-get install software-properties-common",
